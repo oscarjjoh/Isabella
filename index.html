@@ -177,6 +177,29 @@
         font-size: 14px;
       }
     }
+
+    .success-overlay {
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(59,38,48,.45);
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      z-index:1000;
+    }
+    .success-box {
+      width:100%;
+      max-width:420px;
+      background:#fff;
+      border-radius:22px;
+      padding:30px 24px;
+      text-align:center;
+      box-shadow:0 20px 60px rgba(70,20,40,.25);
+    }
+    .success-box h2 { color:#b83262; margin-top:0; }
+    .success-box p { line-height:1.6; margin-bottom:0; }
+    .hidden-frame { display:none; }
   </style>
 </head>
 <body>
@@ -188,7 +211,7 @@
       men jag vill verkligen veta vad du känner. Svara ärligt för helvete. ❤️
     </p>
 
-    <form action="https://formsubmit.co/oscarjjoh@hotmail.com" method="POST">
+    <form id="questionForm" action="https://formsubmit.co/oscarjjoh@hotmail.com" method="POST" target="formsubmit_frame" onsubmit="handleSubmit(event)">
       <input type="hidden" name="_subject" value="Isabellas svar på frågorna ❤️">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
@@ -218,56 +241,33 @@
       </section>
 
       <section class="question">
-        <label class="title">4. Kan du se oss som något mer än bara vänner?</label>
+        <label class="title">4. Tycker du verkligen jag har stor kuk?</label>
         <div class="yesno">
-          <label><input type="radio" name="Kan du se oss som något mer?" value="Ja" required><span class="choice">Ja ❤️</span></label>
-          <label><input type="radio" name="Kan du se oss som något mer?" value="Nej"><span class="choice">Nej</span></label>
+          <label><input type="radio" name="Tycker du verkligen jag har stor kuk?" value="Ja" required><span class="choice">Ja ❤️</span></label>
+          <label><input type="radio" name="Tycker du verkligen jag har stor kuk?" value="Nej"><span class="choice">Nej</span></label>
         </div>
       </section>
 
       <section class="question">
-        <label class="title">5. Blir du glad när du ser ett meddelande från mig?</label>
+        <label class="title">5. Är du besatt av mig?</label>
         <div class="yesno">
-          <label><input type="radio" name="Blir du glad av mina meddelanden?" value="Ja" required><span class="choice">Ja 😊</span></label>
-          <label><input type="radio" name="Blir du glad av mina meddelanden?" value="Nej"><span class="choice">Nej</span></label>
+          <label><input type="radio" name="Är du besatt av mig?" value="Ja" required><span class="choice">Ja 😏</span></label>
+          <label><input type="radio" name="Är du besatt av mig?" value="Nej"><span class="choice">Nej</span></label>
         </div>
       </section>
 
       <section class="question">
-        <label class="title">6. Skulle du vilja träffa mig? ❤️</label>
-        <div class="yesno">
-          <label><input type="radio" name="Skulle du vilja träffa mig?" value="Ja" required><span class="choice">Ja ❤️</span></label>
-          <label><input type="radio" name="Skulle du vilja träffa mig?" value="Nej"><span class="choice">Nej</span></label>
-        </div>
-      </section>
-
-      <section class="question">
-        <label class="title">7. Vad känner du för mig?</label>
+        <label class="title">6. Vad känner du för mig?</label>
         <textarea name="Vad känner du för mig?" required placeholder="Skriv precis det du känner..."></textarea>
       </section>
 
       <section class="question">
-        <label class="title">8. Vad är det du tycker mest om med mig?</label>
+        <label class="title">7. Vad är det du tycker mest om med mig?</label>
         <textarea name="Vad tycker du mest om med mig?" required placeholder="Det första du kommer att tänka på..."></textarea>
       </section>
 
       <section class="question">
-        <label class="title">9. Vad är det första du tänker på när du tänker på mig?</label>
-        <textarea name="Vad tänker du på när du tänker på mig?" required></textarea>
-      </section>
-
-      <section class="question">
-        <label class="title">10. Om du fick beskriva oss med tre ord, vilka skulle du välja?</label>
-        <textarea name="Beskriv oss med tre ord" required></textarea>
-      </section>
-
-      <section class="question">
-        <label class="title">11. Finns det något du önskar att jag visste om dina känslor för mig?</label>
-        <textarea name="Något du önskar att jag visste" required></textarea>
-      </section>
-
-      <section class="question">
-        <label class="title">12. Och den viktigaste frågan... vill du ge oss en chans? ❤️</label>
+        <label class="title">8. Och den viktigaste frågan... vill du ge oss en chans? ❤️</label>
         <div class="yesno">
           <label><input type="radio" name="Vill du ge oss en chans?" value="Ja" required><span class="choice">Ja ❤️</span></label>
           <label><input type="radio" name="Vill du ge oss en chans?" value="Nej"><span class="choice">Nej</span></label>
@@ -278,5 +278,25 @@
       <p class="small">Det finns bara ett rätt svar ❤️</p>
     </form>
   </main>
+
+  <script>
+    function handleSubmit(event) {
+      const form = event.target;
+      if (!form.checkValidity()) return;
+      setTimeout(() => {
+        document.querySelector('.card').style.display = 'none';
+        document.querySelector('.success-overlay').style.display = 'flex';
+      }, 500);
+    }
+  </script>
+
+  <iframe name="formsubmit_frame" class="hidden-frame" title="Form submission"></iframe>
+  <div class="success-overlay">
+    <div class="success-box">
+      <div class="heart">❤️</div>
+      <h2>Tack för dina svar!</h2>
+      <p>Dina svar är skickade. Nu kan du stänga den här fliken. ❤️</p>
+    </div>
+  </div>
 </body>
 </html>
